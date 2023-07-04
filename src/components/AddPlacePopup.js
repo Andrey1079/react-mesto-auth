@@ -1,18 +1,16 @@
 import React from "react";
 import PopupWithForm from "./PopupWithForm";
+import Input from "./Input";
 
 export default function AddPlacePopup({ isOpen, onClose, onAddedPlace, handleCloseByOverlay }) {
   React.useEffect(() => {
-    setCaption("");
-    setUrl("");
+    url.current.value = "";
+    caption.current.value = "";
   }, [isOpen]);
-  const [caption, setCaption] = React.useState(" ");
-  const [url, setUrl] = React.useState(" ");
-  const onChange = (evt) => {
-    evt.target.name === "name" ? setCaption(evt.target.value) : setUrl(evt.target.value);
-  };
+  const url = React.useRef();
+  const caption = React.useRef();
   const handleAddPlace = (evt) => {
-    onAddedPlace({ name: caption, link: url });
+    onAddedPlace({ name: caption.current.value, link: url.current.value });
   };
 
   return (
@@ -25,22 +23,19 @@ export default function AddPlacePopup({ isOpen, onClose, onAddedPlace, handleClo
       onSubmit={handleAddPlace}
       handleCloseByOverlay={handleCloseByOverlay}
     >
-      <input
-        onChange={onChange}
-        value={caption || ""}
+      <Input
+        inputRef={caption}
         className="popup__form-item popup__form-item_type_place"
         type="text"
         name="name"
         placeholder="Название"
-        minLength="2"
-        maxLength="30"
+        validationLength={{ min: 2, max: 30 }}
         id="place-name"
         required
       />
       <span className="popup__form-item-error place-name-error"></span>
-      <input
-        onChange={onChange}
-        value={url || ""}
+      <Input
+        inputRef={url}
         className="popup__form-item popup__form-item_type_img-link"
         type="url"
         name="link"
