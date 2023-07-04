@@ -1,22 +1,20 @@
 import React from "react";
 import PopupWithForm from "./PopupWithForm";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
+import Input from "./Input";
 
-export default function EditProfilePopup({ isOpen, onClose, onUpdatedUserInfo,  handleCloseByOverlay }) {
+export default function EditProfilePopup({ isOpen, onClose, onUpdatedUserInfo, handleCloseByOverlay }) {
   const currentUser = React.useContext(CurrentUserContext);
+  const inputName = React.useRef();
+  const inputDescription = React.useRef();
   React.useEffect(() => {
-    setName(currentUser.name);
-    setDescription(currentUser.about);
+    inputName.current.value = currentUser.name;
+    inputDescription.current.value = currentUser.about;
   }, [isOpen, currentUser]);
-  const [name, setName] = React.useState("");
-  const [description, setDescription] = React.useState("");
-  const handleChange = (evt) => {
-    evt.target.name === "name" ? setName(evt.target.value) : setDescription(evt.target.value);
-  };
   const handleSubmit = (evt) => {
     onUpdatedUserInfo({
-      name: name,
-      about: description,
+      name: inputName.current.value,
+      about: inputDescription.current.value,
     });
   };
 
@@ -30,28 +28,24 @@ export default function EditProfilePopup({ isOpen, onClose, onUpdatedUserInfo,  
       onSubmit={handleSubmit}
       handleCloseByOverlay={handleCloseByOverlay}
     >
-      <input
-        onChange={handleChange}
+      <Input
+        inputRef={inputName}
         className="popup__form-item popup__form-item_type_name"
         type="text"
         name="name"
-        value={name || ""}
         placeholder="Имя"
         id="user-name-input"
-        minLength="2"
-        maxLength="40"
+        validationLength={{ min: 2, max: 40 }}
         required
       />
       <span className="popup__form-item-error user-name-input-error"></span>
-      <input
-        onChange={handleChange}
+      <Input
+        inputRef={inputDescription}
         className="popup__form-item popup__form-item_type_profession"
         type="text"
         name="profession"
-        value={description || ""}
         placeholder="Профессия"
-        minLength="2"
-        maxLength="200"
+        validationLength={{ min: 2, max: 200 }}
         required
         id="user-profession"
       />

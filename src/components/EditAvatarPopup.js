@@ -29,15 +29,6 @@ export default function EditAvatarPopup({ isOpen, onClose, onUpdatedAvatar, hand
         placeholder="cсылка на аватар"
         id="avatar-link"
       />
-      {/* <input
-        ref={inputAvatar}
-        className="popup__form-item popup__form-item_type_avtar-link"
-        type="url"
-        name="url"
-        placeholder="cсылка на аватар"
-        id="avatar-link"
-        required
-      /> */}
       <span className="popup__form-item-error avatar-link-error"></span>
     </PopupWithForm>
   );
