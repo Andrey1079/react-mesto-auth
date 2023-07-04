@@ -9,6 +9,8 @@ import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
 import AddPlacePopup from "./AddPlacePopup";
 import { BrowserRouter } from "react-router-dom";
+import Login from "./Login";
+import Register from "./Register";
 
 function App() {
   const [currentUser, setCurrentUser] = React.useState({});
@@ -111,7 +113,9 @@ function App() {
       <CurrentUserContext.Provider value={currentUser}>
         <div className="page__container">
           <Header />
-          <Main
+          <Login></Login>
+          <Register></Register>
+          {/* <Main
             cards={cards}
             onEditProfile={handleEditProfileClick}
             onAddPlace={handleAddPlaceClick}
@@ -119,7 +123,7 @@ function App() {
             onCardClick={handleCardClick}
             onCardLikeClick={handleCardLike}
             onCardDeleteClick={handleCardDelete}
-          />
+          /> */}
           <Footer />
           <EditProfilePopup
             isOpen={isEditProfilePopupOpen}

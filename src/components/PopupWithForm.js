@@ -12,7 +12,7 @@ function PopupWithForm({ isOpen, onClose, name, title, text, children, onSubmit 
       <div className="popup__card popup__card_size_L">
         <button onClick={onClose} type="button" className="popup__close-button button" />
         <h2 className="popup__title">{title}</h2>
-        <Form onSubmit={handleSubmit} text={text} className={`popup__form popup__form_type_${name}`}>
+        <Form onSubmit={handleSubmit} text={text} className="popup__form">
           {children}
         </Form>
       </div>

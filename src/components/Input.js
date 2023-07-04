@@ -1,4 +1,4 @@
-export default function Input({ inputRef, className, type, name, placeholder, id, validationLength, onChange }) {
+export default function Input({ inputRef, className, type, name, placeholder, id, validationLength }) {
   return (
     <>
       <input

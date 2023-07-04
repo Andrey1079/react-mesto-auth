@@ -1,5 +1,5 @@
-import PopupWithForm from "./PopupWithForm";
+import AuthPage from "./AuthPage";
 
 export default function Login() {
-  return <Input />;
+  return <AuthPage title="Вход" text="Войти" />;
 }

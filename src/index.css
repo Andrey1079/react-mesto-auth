@@ -61,3 +61,9 @@
 @import url(./blocks/gallery/__author-avatar/gallery__author-avatar.css);
 @import url(./blocks/header/__login/header__login.css);
 @import url(./blocks/header/__link/header__link.css);
+@import url(./blocks/auth/__title/auth__title.css);
+@import url(./blocks/auth/__form/auth__form.css);
+@import url(./blocks/auth/__input/auth__input.css);
+@import url(./blocks/auth/__submit-button/auth__submit-button.css);
+@import url(./blocks/register/__link/register__link.css);
+@import url(./blocks/register/__subtitile/register__subtitile.css);
