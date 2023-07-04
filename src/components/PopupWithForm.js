@@ -1,7 +1,7 @@
-import React, { useEffect } from "react";
+import React from "react";
+import Form from "./Form";
 function PopupWithForm({ isOpen, onClose, name, title, text, children, onSubmit }) {
-  const handleSubmit = (evt) => {
-    evt.preventDefault();
+  const handleSubmit = () => {
     onSubmit();
   };
   const handleCloseByOverlay = (evt) => {
@@ -12,11 +12,9 @@ function PopupWithForm({ isOpen, onClose, name, title, text, children, onSubmit 
       <div className="popup__card popup__card_size_L">
         <button onClick={onClose} type="button" className="popup__close-button button" />
         <h2 className="popup__title">{title}</h2>
-        <form onSubmit={handleSubmit} name={`popup-info-${name}`} className={`popup__form popup__form_type_${name}`}>
+        <Form onSubmit={handleSubmit} text={text} className={`popup__form popup__form_type_${name}`}>
           {children}
-
-          <input value={text} type="submit" className="popup__submit-button button" />
-        </form>
+        </Form>
       </div>
     </div>
   );

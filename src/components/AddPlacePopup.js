@@ -33,7 +33,7 @@ export default function AddPlacePopup({ isOpen, onClose, onAddedPlace, handleClo
         id="place-name"
         required
       />
-      <span className="popup__form-item-error place-name-error"></span>
+
       <Input
         inputRef={url}
         className="popup__form-item popup__form-item_type_img-link"
@@ -43,7 +43,6 @@ export default function AddPlacePopup({ isOpen, onClose, onAddedPlace, handleClo
         id="img-link"
         required
       />
-      <span className="popup__form-item-error img-link-error"></span>
     </PopupWithForm>
   );
 }

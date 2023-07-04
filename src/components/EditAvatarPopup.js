@@ -1,23 +1,22 @@
 import React from "react";
 import PopupWithForm from "./PopupWithForm";
 import Input from "./Input";
+
 export default function EditAvatarPopup({ isOpen, onClose, onUpdatedAvatar, handleCloseByOverlay }) {
   React.useEffect(() => {
     inputAvatar.current.value = "";
   }, [isOpen]);
   const inputAvatar = React.useRef();
-
   const handleSubmit = (evt) => {
     onUpdatedAvatar(inputAvatar.current.value);
   };
   return (
     <PopupWithForm
+      onSubmit={handleSubmit}
       isOpen={isOpen}
       onClose={onClose}
-      onSubmit={handleSubmit}
       name="edit-avatar"
       title="Обновить аватар"
-      text="Сохранить"
       handleCloseByOverlay={handleCloseByOverlay}
     >
       <Input
@@ -29,7 +28,6 @@ export default function EditAvatarPopup({ isOpen, onClose, onUpdatedAvatar, hand
         placeholder="cсылка на аватар"
         id="avatar-link"
       />
-      <span className="popup__form-item-error avatar-link-error"></span>
     </PopupWithForm>
   );
 }

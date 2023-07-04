@@ -38,7 +38,7 @@ export default function EditProfilePopup({ isOpen, onClose, onUpdatedUserInfo, h
         validationLength={{ min: 2, max: 40 }}
         required
       />
-      <span className="popup__form-item-error user-name-input-error"></span>
+
       <Input
         inputRef={inputDescription}
         className="popup__form-item popup__form-item_type_profession"
@@ -49,7 +49,6 @@ export default function EditProfilePopup({ isOpen, onClose, onUpdatedUserInfo, h
         required
         id="user-profession"
       />
-      <span className="popup__form-item-error user-profession-error"></span>
     </PopupWithForm>
   );
 }
