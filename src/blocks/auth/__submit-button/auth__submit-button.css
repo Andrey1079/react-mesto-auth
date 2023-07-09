@@ -5,6 +5,7 @@
   border-radius: 2px;
   font-size: 18px;
   color: #000;
+  border: none;
 }
 
 .auth__submit-button:hover {

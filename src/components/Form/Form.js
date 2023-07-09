@@ -2,7 +2,6 @@ export default function Form({ onSubmit, name, text, children, className }) {
   const handleSubmit = (evt) => {
     evt.preventDefault();
     onSubmit();
-    console.log(className.match(/popup/g));
   };
   return (
     <form onSubmit={handleSubmit} name={name} className={className}>

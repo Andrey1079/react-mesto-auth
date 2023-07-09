@@ -1,6 +1,6 @@
 import React from "react";
 import PopupWithForm from "./PopupWithForm";
-import Input from "./Input";
+import Input from "../Form/Input";
 
 export default function EditAvatarPopup({ isOpen, onClose, onUpdatedAvatar, handleCloseByOverlay }) {
   React.useEffect(() => {
