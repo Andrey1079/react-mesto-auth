@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import AuthPage from "./AuthPage";
-import authentication from "../utils/authentication";
 
 export default function Register({ onSubmit }) {
   return (
