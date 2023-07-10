@@ -6,6 +6,7 @@ import Footer from "./Footer";
 import ImagePopup from "./Popups/ImagePopup";
 import api from "../utils/api";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
+import IsAnyPopupOpenedContext from "../contexts/IsAnyPopupOpenedContext";
 import EditProfilePopup from "./Popups/EditProfilePopup";
 import EditAvatarPopup from "./Popups/EditAvatarPopup";
 import AddPlacePopup from "./Popups/AddPlacePopup";
@@ -14,6 +15,7 @@ import Register from "./Register";
 import InfoTooltip from "./Popups/InfoTooltip";
 import authentication from "../utils/authentication";
 import ProtectedRoute from "./ProtectedRoute";
+import useResize from "./customHooks/useResize";
 
 function App() {
   //                                                ---- Стейты  ----
@@ -28,47 +30,32 @@ function App() {
   const [email, setEmail] = React.useState("");
   const [isTooltipOpen, setIsTooltipOpen] = React.useState(false);
   const [isResponseOk, setIsResponseOk] = React.useState(false);
-  const [windowWidth, setWinsowWidth] = React.useState(window.innerWidth);
   //
   //                                               ----  Переменные  ----
   const isAnyPopupOpened =
     isEditProfilePopupOpen || isEditAvatarPopupOpen || isAddPlacePopupOpen || isImagePopupOpen || isTooltipOpen;
   const navigate = useNavigate();
-
+  let windowWidth = useResize(500);
   //
   //                                                ---- Эффекты  ----
-  React.useEffect(() => {
-    const handleResize = (evt) => {
-      setWinsowWidth(evt.target.innerWidth);
-    };
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
+
   React.useEffect(() => {
     checkToken();
     // eslint-disable-next-line
   }, []);
   React.useEffect(() => {
-    api
-      .getStartInfo()
-      .then((startData) => {
-        const [userData, initialCards] = startData;
-        setCurrentUser(userData);
-        setCards(initialCards);
-      })
-      .catch((err) => console.log(err));
-  }, []);
-  React.useEffect(() => {
-    const handleCloseByEscape = (evt) => {
-      evt.key === "Escape" && closeAllPopups();
-    };
-    if (isAnyPopupOpened) {
-      document.addEventListener("keydown", handleCloseByEscape);
+    if (loggedIn) {
+      api
+        .getStartInfo()
+        .then((startData) => {
+          const [userData, initialCards] = startData;
+          setCurrentUser(userData);
+          setCards(initialCards);
+        })
+        .catch((err) => console.log(err));
     }
-    return () => document.removeEventListener("keydown", handleCloseByEscape);
-  }, [isAnyPopupOpened]);
+  }, [loggedIn]);
+
   //
   //                                               ---- Функции для кнопок ----
   const handleEditAvatarClick = () => {
@@ -196,69 +183,71 @@ function App() {
     navigate("/login", { replace: true });
   };
   return (
-    <CurrentUserContext.Provider value={currentUser}>
-      <div className="page__container">
-        <Routes>
-          <Route
-            exact
-            path="/login"
-            element={
-              <>
-                <Header page="login"></Header>
-                <Login onSubmit={handleSignIn} />
-              </>
-            }
-          />
-          <Route
-            exact
-            path="/register"
-            element={
-              <>
-                <Header page="register"></Header>
-                <Register onSubmit={handleSignUp} />
-              </>
-            }
-          />
-          <Route
-            exact
-            path="/"
-            element={
-              <>
-                <Header width={windowWidth} page="main" onLogOut={handleLogOut} email={email}></Header>
-                <ProtectedRoute
-                  loggedIn={loggedIn}
-                  cards={cards}
-                  onEditProfile={handleEditProfileClick}
-                  onAddPlace={handleAddPlaceClick}
-                  onEditAvatar={handleEditAvatarClick}
-                  onCardClick={handleCardClick}
-                  onCardLikeClick={handleCardLike}
-                  onCardDeleteClick={handleCardDelete}
-                  element={Main}
-                />
-                <Footer />
-              </>
-            }
-          />
-          <Route path="*" element={loggedIn ? <Navigate to="/" /> : <Navigate to="/login" />} />
-        </Routes>
+    <IsAnyPopupOpenedContext.Provider value={isAnyPopupOpened}>
+      <CurrentUserContext.Provider value={currentUser}>
+        <div className="page__container">
+          <Routes>
+            <Route
+              exact
+              path="/login"
+              element={
+                <>
+                  <Header page="login"></Header>
+                  <Login onSubmit={handleSignIn} />
+                </>
+              }
+            />
+            <Route
+              exact
+              path="/register"
+              element={
+                <>
+                  <Header page="register"></Header>
+                  <Register onSubmit={handleSignUp} />
+                </>
+              }
+            />
+            <Route
+              exact
+              path="/"
+              element={
+                <>
+                  <Header width={windowWidth} page="main" onLogOut={handleLogOut} email={email}></Header>
+                  <ProtectedRoute
+                    loggedIn={loggedIn}
+                    cards={cards}
+                    onEditProfile={handleEditProfileClick}
+                    onAddPlace={handleAddPlaceClick}
+                    onEditAvatar={handleEditAvatarClick}
+                    onCardClick={handleCardClick}
+                    onCardLikeClick={handleCardLike}
+                    onCardDeleteClick={handleCardDelete}
+                    element={Main}
+                  />
+                  <Footer />
+                </>
+              }
+            />
+            <Route path="*" element={loggedIn ? <Navigate to="/" /> : <Navigate to="/login" />} />
+          </Routes>
 
-        <EditProfilePopup
-          isOpen={isEditProfilePopupOpen}
-          onClose={closeAllPopups}
-          onUpdatedUserInfo={handleUpdateUser}
-        ></EditProfilePopup>
-        <EditAvatarPopup
-          isOpen={isEditAvatarPopupOpen}
-          onClose={closeAllPopups}
-          onUpdatedAvatar={handleUpdateAvatar}
-        ></EditAvatarPopup>
-        <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddedPlace={handleAddPlace}></AddPlacePopup>
+          <EditProfilePopup
+            isOpen={isEditProfilePopupOpen}
+            onClose={closeAllPopups}
+            onUpdatedUserInfo={handleUpdateUser}
+          ></EditProfilePopup>
+          <EditAvatarPopup
+            isOpen={isEditAvatarPopupOpen}
+            onClose={closeAllPopups}
+            onUpdatedAvatar={handleUpdateAvatar}
+          ></EditAvatarPopup>
+          <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddedPlace={handleAddPlace}></AddPlacePopup>
 
-        <ImagePopup isOpen={isImagePopupOpen} card={selectedCard} onClose={closeAllPopups} />
-        <InfoTooltip isOpen={isTooltipOpen} onClose={closeAllPopups} succes={isResponseOk}></InfoTooltip>
-      </div>
-    </CurrentUserContext.Provider>
+          <ImagePopup isOpen={isImagePopupOpen} card={selectedCard} onClose={closeAllPopups} />
+          <InfoTooltip isOpen={isTooltipOpen} onClose={closeAllPopups} succes={isResponseOk}></InfoTooltip>
+        </div>
+      </CurrentUserContext.Provider>
+    </IsAnyPopupOpenedContext.Provider>
   );
 }
 

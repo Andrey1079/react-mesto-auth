@@ -1,14 +1,18 @@
-import React from "react";
+import React, { useMemo } from "react";
 import Card from "./Card";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 function Main({ onEditProfile, onEditAvatar, onCardClick, onAddPlace, onCardLikeClick, cards, onCardDeleteClick }) {
   const userData = React.useContext(CurrentUserContext);
-  const cardsElements = cards.map((item) => (
-    <li key={item._id} className="gallery__item">
-      <Card card={item} onCardClick={onCardClick} onLikeClick={onCardLikeClick} onDeleteClick={onCardDeleteClick} />
-    </li>
-  ));
+  const cardsElements = useMemo(
+    () =>
+      cards.map((item) => (
+        <li key={item._id} className="gallery__item">
+          <Card card={item} onCardClick={onCardClick} onLikeClick={onCardLikeClick} onDeleteClick={onCardDeleteClick} />
+        </li>
+      )),
+    [cards]
+  );
   return (
     <main>
       {/* START PROFILE*/}
