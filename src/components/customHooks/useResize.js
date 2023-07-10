@@ -15,7 +15,7 @@ const useResize = (delay) => {
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, [windowWidth]);
+  }, [windowWidth, delay]);
   return windowWidth;
 };
 export default useResize;

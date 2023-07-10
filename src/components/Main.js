@@ -11,7 +11,7 @@ function Main({ onEditProfile, onEditAvatar, onCardClick, onAddPlace, onCardLike
           <Card card={item} onCardClick={onCardClick} onLikeClick={onCardLikeClick} onDeleteClick={onCardDeleteClick} />
         </li>
       )),
-    [cards]
+    [cards, onCardClick, onCardDeleteClick, onCardLikeClick]
   );
   return (
     <main>

@@ -13,7 +13,7 @@ export default function Popup({ isOpen, onClose, name, children }) {
       document.addEventListener("keydown", handleCloseByEscape);
     }
     return () => document.removeEventListener("keydown", handleCloseByEscape);
-  }, [isAnyPopupOpened]);
+  }, [isAnyPopupOpened, onClose]);
 
   return (
     <div onClick={handleCloseByOverlay} className={`popup popup-${name} ${isOpen && "popup_visible"}`}>
