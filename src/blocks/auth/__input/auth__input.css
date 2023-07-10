@@ -7,3 +7,8 @@
   padding: 0 0 13px 0;
   color: white;
 }
+@media screen and (max-width: 567px) {
+  .auth__input {
+    width: calc(100% - 60px);
+  }
+}

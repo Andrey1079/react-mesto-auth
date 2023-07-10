@@ -11,3 +11,9 @@
 .auth__submit-button:hover {
   opacity: 0.6;
 }
+
+@media screen and (max-width: 567px) {
+  .auth__submit-button {
+    width: calc(100% - 60px);
+  }
+}

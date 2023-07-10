@@ -3,6 +3,8 @@
   width: 142px;
   object-fit: cover;
   margin-bottom: 41px;
+  grid-column-start: 1;
+  grid-column-end: 2;
 }
 
 .header__logo:hover {

@@ -1,9 +1,9 @@
 .gallery__author-name {
-  display: inline-block;
   margin-left: 10px;
   margin-right: 5px;
-  text-overflow: ellipsis;
-
   overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   color: black;
+  font-size: small;
 }

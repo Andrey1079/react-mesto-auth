@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React from "react";
 import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import Header from "./Header";
 import Main from "./Main";
@@ -28,17 +28,27 @@ function App() {
   const [email, setEmail] = React.useState("");
   const [isTooltipOpen, setIsTooltipOpen] = React.useState(false);
   const [isResponseOk, setIsResponseOk] = React.useState(false);
+  const [windowWidth, setWinsowWidth] = React.useState(window.innerWidth);
   //
   //                                               ----  Переменные  ----
   const isAnyPopupOpened =
     isEditProfilePopupOpen || isEditAvatarPopupOpen || isAddPlacePopupOpen || isImagePopupOpen || isTooltipOpen;
   const navigate = useNavigate();
+
   //
   //                                                ---- Эффекты  ----
   React.useEffect(() => {
-    if (localStorage.getItem("token")) {
-      useCallback.checkToken(localStorage.getItem("token"));
-    }
+    const handleResize = (evt) => {
+      setWinsowWidth(evt.target.innerWidth);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+  React.useEffect(() => {
+    checkToken();
+    // eslint-disable-next-line
   }, []);
   React.useEffect(() => {
     api
@@ -167,15 +177,17 @@ function App() {
         console.log(err);
       });
   };
-  const checkToken = (token) => {
-    authentication
-      .checkToken(token)
-      .then((res) => {
-        setEmail(res.data.email);
-        setLoggedIn(true);
-        navigate("/", { replace: true });
-      })
-      .catch((err) => console.log(err));
+  const checkToken = () => {
+    if (localStorage.getItem("token")) {
+      authentication
+        .checkToken(localStorage.getItem("token"))
+        .then((res) => {
+          setEmail(res.data.email);
+          setLoggedIn(true);
+          navigate("/", { replace: true });
+        })
+        .catch((err) => console.log(err));
+    }
   };
 
   const handleLogOut = () => {
@@ -212,7 +224,7 @@ function App() {
             path="/"
             element={
               <>
-                <Header page="main" onLogOut={handleLogOut} email={email}></Header>
+                <Header width={windowWidth} page="main" onLogOut={handleLogOut} email={email}></Header>
                 <ProtectedRoute
                   loggedIn={loggedIn}
                   cards={cards}

@@ -1,5 +1,9 @@
 .header__login {
   color: white;
-  justify-self: end;
-  margin-top: 6px;
+  margin: 0;
+}
+@media screen and (max-width: 520px) {
+  .header__login {
+    margin-bottom: 18px;
+  }
 }

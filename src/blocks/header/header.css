@@ -1,7 +1,5 @@
 .header {
   display: grid;
   grid-template-columns: 1fr min-content min-content;
-  width: 100%;
-  box-sizing: border-box;
-  border-bottom: 1px solid rgba(84, 84, 84, 0.7);
+  grid-template-rows: repeat(2, min-content);
 }
