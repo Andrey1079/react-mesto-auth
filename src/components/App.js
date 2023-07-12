@@ -228,7 +228,7 @@ function App() {
                 </>
               }
             />
-            <Route path="*" element={loggedIn ? <Navigate to="/" /> : <Navigate to="/login" />} />
+            <Route path="*" element={<Navigate to="/" />} />
           </Routes>
 
           <EditProfilePopup
