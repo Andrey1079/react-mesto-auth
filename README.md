@@ -54,6 +54,6 @@
 - Webpack
 - Figma
 - Git
-- 
+  
 #### Ссылка на страницу проекта:
 https://andrey1079.github.io/react-mesto-auth/
